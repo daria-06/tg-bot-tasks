@@ -1,32 +1,28 @@
 const TelegramApi = require('node-telegram-bot-api');
-const {gameOptions, againOptions} = require('./options.js')
+const {keyboardOptions} = require('./options.js')
 
 const token = '2019159605:AAFyEFYJU7bR8OvvBEi32aqGE3Hj2ASzasI'
 
 const bot = new TelegramApi(token, {polling: true})
 
 
-const startGame = async (chatId) => {
-    await bot.sendMessage(chatId, 'options', gameOptions)
+const startBot = async (chatId) => {
+    await bot.sendMessage(chatId, 'What pills do you take? (enter one name)', keyboardOptions)
 }
 
 const start = () => {
     bot.setMyCommands([
         {command: '/start', description: 'Start the bot'},
-        {command: '/info', description: 'Information about you'},
-        {command: '/game', description: 'Start game'}
+        {command: '/set', description: 'Set timer'}
     ])
     
     bot.on('message', async msg => {
         const text = msg.text;
         const chatId = msg.chat.id;
+        console.log(text)
     
         if (text === '/start') {
-        }
-        if (text === '/info') {
-        }
-        if (text === '/game') {
-            return startGame(chatId);
+            return startBot(chatId);
         }
         return bot.sendMessage(chatId, 'I dont understand you')
     })

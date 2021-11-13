@@ -1,8 +1,8 @@
 module.exports = {
-    gameOptions: {
+    keyboardOptions: {
         reply_markup: JSON.stringify({
-            keyb: [
-                [{text: 'Set timer', callback_data: '1'}, {text: 'View current timers', callback_data: '2'}],
+            inline_keyboard: [
+                [{text: 'Type pill name', callback_data: '1'}],
             ]
         })
     },
