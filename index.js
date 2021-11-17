@@ -3,7 +3,7 @@ const {keyboardOptions} = require('./options.js');
 const {token} = require('./config')
 const mongoose = require('mongoose')
 const Task = require('./models/Task')
-const DB_URL = 'mongodb+srv://admin:123@cluster0.ez8ti.mongodb.net/tasks?retryWrites=true&w=majority'
+const DB_URL = ''
 
 
 const bot = new TelegramApi(token, {polling: true});
