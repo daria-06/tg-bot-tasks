@@ -1,13 +1,14 @@
 const TelegramApi = require('node-telegram-bot-api');
 const {keyboardOptions} = require('./options.js');
-
-const token = '2019159605:AAFyEFYJU7bR8OvvBEi32aqGE3Hj2ASzasI';
+const {token} = require('./config')
+const mongoose = require('mongoose')
+const Task = require('./models/Task')
+const DB_URL = 'mongodb+srv://admin:123@cluster0.ez8ti.mongodb.net/tasks?retryWrites=true&w=majority'
 
 const bot = new TelegramApi(token, {polling: true});
 
-const tasks = {}
-
 const getData = async (chatId) => {
+    await mongoose.connect(DB_URL)
     await bot.sendMessage(chatId, 'Enter the description of the task you want to be reminded off (e.g. call Bob, take meds, buy lettuce)', {
         reply_markup: {
             force_reply: true
@@ -16,17 +17,13 @@ const getData = async (chatId) => {
     bot.on('message', async msg => {
         const task = msg.text;
         const chatId = msg.chat.id;
-        tasks[chatId] = task;
         await bot.sendMessage(chatId, 'In how many hours do you need this reminder?', keyboardOptions)
         bot.on('callback_query', async msg => {
-            const data = msg.data;
-            tasks['timer'] = data
-            console.log(data)
-            console.log(tasks)
+            const timer = msg.data;
+
+            const newtask = new Task({chatId: chatId, task: task, timer: timer})
+            await newtask.save()
         })
-        
-        console.log(task);
-        console.log(tasks);
     })
 }
 
@@ -45,10 +42,6 @@ const start = () => {
             return getData(chatId);
         }
     })
-        //bot.on('callback_query', async msg => {
-        //const data = msg.data;
-        //const chatId = msg.message.chat.id;
-    //})
 }
 
 start();
