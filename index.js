@@ -5,13 +5,8 @@ const mongoose = require('mongoose')
 const Task = require('./models/Task')
 const DB_URL = 'mongodb+srv://admin:123@cluster0.ez8ti.mongodb.net/tasks?retryWrites=true&w=majority'
 
-<<<<<<< HEAD
-const bot = new TelegramApi(token, {polling: true});
-=======
-const token = ''
 
-const bot = new TelegramApi(token, {polling: true})
->>>>>>> f790f26cb1a247f12a4557effa63b65a567e695c
+const bot = new TelegramApi(token, {polling: true});
 
 const getData = async (chatId) => {
     await mongoose.connect(DB_URL)
