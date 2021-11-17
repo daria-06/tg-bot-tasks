@@ -45,8 +45,4 @@ const start = () => {
     })
 }
 
-<<<<<<< HEAD
 start();
-=======
-start()
->>>>>>> f790f26cb1a247f12a4557effa63b65a567e695c
